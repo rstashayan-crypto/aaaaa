@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- PWA Configuration -->
+    <meta name="application-name" content="یادواره شهدای بناب">
+    <meta name="description" content="یادواره شهیدان والامقام شهر بناب">
+    <meta name="theme-color" content="#ff4d4d">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <title>یادواره شهیدان بناب</title>
+    
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #ff4d4d;
+            --primary-dark: #cc0000;
+            --secondary: #ffcc00;
+            --accent: #ff9966;
+            --light: #fff5f5;
+            --dark: #330000;
+            --gray: #666;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 10px 30px rgba(255, 77, 77, 0.2);
+            --radius: 20px;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ffcccc 0%, #ff9999 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            animation: gradientBG 15s ease infinite;
+            background-size: 400% 400%;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50% }
+            50% { background-position: 100% 50% }
+            100% { background-position: 0% 50% }
+        }
+        
+        /* Install Prompt */
+        .install-prompt-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .install-prompt {
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.5s ease;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .install-prompt h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .install-prompt p {
+            color: var(--gray);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .prompt-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .prompt-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            min-width: 120px;
+        }
+        
+        .btn-yes {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: var(--dark);
+        }
+        
+        .btn-no {
+            background: #f0f0f0;
+            color: var(--gray);
+            border: 2px solid #ddd;
+        }
+        
+        .prompt-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M50,20 L60,40 L80,40 L65,60 L75,80 L50,65 L25,80 L35,60 L20,40 L40,40 Z" fill="white"/></svg>');
+            background-size: 150px;
+        }
+        
+        .header h1 {
+            color: white;
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .header .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            position: relative;
+        }
+        
+        /* Search Box */
+        .search-container {
+            margin: 40px auto;
+            max-width: 800px;
+        }
+        
+        .search-box {
+            background: var(--card-bg);
+            border-radius: 50px;
+            padding: 10px 25px;
+            display: flex;
+            align-items: center;
+            box-shadow: var(--shadow);
+            border: 3px solid var(--secondary);
+            transition: all 0.3s ease;
+        }
+        
+        .search-box:focus-within {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255, 77, 77, 0.3);
+        }
+        
+        .search-box input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 15px;
+            font-size: 1.1rem;
+            color: var(--dark);
+            outline: none;
+        }
+        
+        .search-box input::placeholder {
+            color: var(--gray);
+        }
+        
+        .search-icon {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-left: 10px;
+        }
+        
+        /* Filter Buttons */
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px auto;
+            flex-wrap: wrap;
+            max-width: 900px;
+        }
+        
+        .filter-btn {
+            padding: 15px 30px;
+            background: var(--card-bg);
+            border: 3px solid var(--secondary);
+            border-radius: 50px;
+            color: var(--dark);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .filter-btn:hover {
+            transform: translateY(-5px);
+            background: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            border-color: var(--secondary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 204, 0, 0.3);
+        }
+        
+        /* Martyrs Grid */
+        .martyrs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .martyrs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Martyr Card */
+        .martyr-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+            border: 3px solid transparent;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cardAppear 0.6s ease forwards;
+        }
+        
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .martyr-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(255, 77, 77, 0.3);
+            border-color: var(--secondary);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .martyr-emoji {
+            font-size: 4.5rem;
+            display: block;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .martyr-name {
+            color: white;
+            font-size: 1.8rem;
+            margin: 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .card-body {
+            padding: 25px;
+        }
+        
+        .martyr-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 15px;
+            border-right: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .info-item:hover {
+            background: white;
+            transform: translateX(-5px);
+        }
+        
+        .info-icon {
+            color: var(--primary);
+            font-size: 1.3rem;
+            min-width: 30px;
+        }
+        
+        .info-text {
+            color: var(--dark);
+        }
+        
+        .info-text strong {
+            color: var(--primary-dark);
+        }
+        
+        /* Memories Section */
+        .memories-section {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid var(--secondary);
+        }
+        
+        .memories-title {
+            color: var(--primary-dark);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .memories-list {
+            list-style: none;
+        }
+        
+        .memory-item {
+            padding: 15px;
+            margin-bottom: 12px;
+            background: white;
+            border-radius: 12px;
+            border-right: 4px solid var(--accent);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .memory-item:hover {
+            transform: translateX(-8px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .memory-item::before {
+            content: '📖';
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        /* Stats Section */
+        .stats-container {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: var(--radius);
+            padding: 40px;
+            margin: 50px 0;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .stats-title {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+        
+        .stat-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+            box-shadow: 0 10px 25px rgba(255, 204, 0, 0.3);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .stat-label {
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--secondary);
+        }
+        
+        .footer-logo {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: block;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .footer p {
+            color: var(--dark);
+            margin: 10px 0;
+            font-size: 1.1rem;
+        }
+        
+        /* Add to Home Button */
+        .add-to-home-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: var(--dark);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            z-index: 100;
+            display: none;
+            animation: pulse 2s infinite;
+            transition: all 0.3s ease;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .add-to-home-btn:hover {
+            transform: scale(1.2);
+            box-shadow: 0 8px 25px rgba(255, 204, 0, 0.4);
+        }
+        
+        /* Responsive */
+        @media (max-width: 480px) {
+            .header h1 { font-size: 2rem; }
+            .martyr-info { grid-template-columns: 1fr; }
+            .filter-buttons { gap: 10px; }
+            .filter-btn { padding: 12px 20px; }
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--light);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Install Prompt -->
+    <div id="installPrompt" class="install-prompt-overlay" style="display: none;">
+        <div class="install-prompt">
+            <h3>🎉 برنامه "یادواره شهیدان بناب"</h3>
+            <p>آیا می‌خواهید این برنامه را به صفحه اصلی دستگاه خود اضافه کنید؟</p>
+            <p style="font-size: 0.9em; color: #888; margin-top: 10px;">
+                این کار باعث می‌شود سریع‌تر به برنامه دسترسی داشته باشید و مانند یک برنامه واقعی روی دستگاهتان اجرا شود.
+            </p>
+            <div class="prompt-buttons">
+                <button id="installYes" class="prompt-btn btn-yes">✅ بله، اضافه کن</button>
+                <button id="installNo" class="prompt-btn btn-no">❌ نه، ممنون</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add to Home Button -->
+    <button id="addToHomeBtn" class="add-to-home-btn" title="اضافه به صفحه اصلی">📱</button>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🕊️ یادواره شهیدان شهر بناب</h1>
+            <p class="subtitle">گرامی‌باد یاد شهیدان والامقام</p>
+        </header>
+        
+        <!-- Search -->
+        <div class="search-container">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="جستجوی نام شهید، تاریخ تولد، محل شهادت یا خاطره...">
+            </div>
+        </div>
+        
+        <!-- Filters -->
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">
+                <span>🌟</span> همه شهیدان
+            </button>
+            <button class="filter-btn" data-filter="war">
+                <span>⚔️</span> دفاع مقدس
+            </button>
+            <button class="filter-btn" data-filter="security">
+                <span>🛡️</span> امنیت ملی
+            </button>
+            <button class="filter-btn" data-filter="other">
+                <span>🕌</span> شهدای مدافع حرم
+            </button>
+        </div>
+        
+        <!-- Martyrs Grid -->
+        <div class="martyrs-grid" id="martyrsContainer">
+            <!-- شهید 1 -->
+            <div class="martyr-card" data-category="war">
+                <div class="card-header">
+                    <span class="martyr-emoji">❤️</span>
+                    <h2 class="martyr-name">علی مرادی</h2>
+                </div>
+                <div class="card-body">
+                    <div class="martyr-info">
+                        <div class="info-item">
+                            <span class="info-icon">📅</span>
+                            <div class="info-text">
+                                <strong>تولد:</strong> ۱۵ خرداد ۱۳۴۵
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🕯️</span>
+                            <div class="info-text">
+                                <strong>شهادت:</strong> ۲۷ آبان ۱۳۶۵
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">👤</span>
+                            <div class="info-text">
+                                <strong>سن:</strong> ۲۰ سال
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📍</span>
+                            <div class="info-text">
+                                <strong>دلیل شهادت:</strong> اصابت ترکش در عملیات
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="memories-section">
+                        <h3 class="memories-title">📖 خاطرات شهید</h3>
+                        <ul class="memories-list">
+                            <li class="memory-item">علی همیشه قبل از عملیات قرآن کوچکی را که مادرش به او داده بود، می‌بوسید و در جیب پیراهنش می‌گذاشت.</li>
+                            <li class="memory-item">در آخرین نامه‌اش به برادر کوچکترش نوشته بود: "اگر من برنگشتم، تو راهم را ادامه بده و همیشه یاور مادر باش."</li>
+                            <li class="memory-item">هنگام اعزام به جبهه به دوستانش گفت: "من برای دفاع از میهنم می‌روم و اگر بازنگشتم، بدانید که به آرزویم رسیدم."</li>
+                            <li class="memory-item">معلمش تعریف می‌کرد: علی همیشه در مدرسه شاگرد اول بود و می‌گفت می‌خواهد مهندس شود تا کشورش را آباد کند.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- شهید 2 -->
+            <div class="martyr-card" data-category="security">
+                <div class="card-header">
+                    <span class="martyr-emoji">💙</span>
+                    <h2 class="martyr-name">حسین احمدی</h2>
+                </div>
+                <div class="card-body">
+                    <div class="martyr-info">
+                        <div class="info-item">
+                            <span class="info-icon">📅</span>
+                            <div class="info-text">
+                                <strong>تولد:</strong> ۱۰ فروردین ۱۳۵۸
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🕯️</span>
+                            <div class="info-text">
+                                <strong>شهادت:</strong> ۱۵ مرداد ۱۳۸۷
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">👤</span>
+                            <div class="info-text">
+                                <strong>سن:</strong> ۲۹ سال
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📍</span>
+                            <div class="info-text">
+                                <strong>دلیل شهادت:</strong> درگیری مسلحانه با اشرار
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="memories-section">
+                        <h3 class="memories-title">📖 خاطرات شهید</h3>
+                        <ul class="memories-list">
+                            <li class="memory-item">حسین عاشق ورزش بود و هر صبح قبل از مرخصی، در پادگان ورزش می‌کرد و به هم‌رزمانش نیز انگیزه می‌داد.</li>
+                            <li class="memory-item">در یکی از نامه‌هایش نوشته بود: "حفاظت از مرزهای کشور افتخاری است که نصیب هر کسی نمی‌شود."</li>
+                            <li class="memory-item">مادرش تعریف می‌کرد: آخرین باری که به خانه آمد، کلی خوراکی برای بچه‌های محله آورده بود و می‌گفت بچه‌های مرزنشین محروم هستند.</li>
+                            <li class="memory-item">دوستانش می‌گویند در آخرین درگیری، برای نجات جان یک هم‌رزم خود را به خطر انداخت و این باعث شهادتش شد.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- شهید 3 -->
+            <div class="martyr-card" data-category="war">
+                <div class="card-header">
+                    <span class="martyr-emoji">💚</span>
+                    <h2 class="martyr-name">محمدرضا کریمی</h2>
+                </div>
+                <div class="card-body">
+                    <div class="martyr-info">
+                        <div class="info-item">
+                            <span class="info-icon">📅</span>
+                            <div class="info-text">
+                                <strong>تولد:</strong> ۵ اردیبهشت ۱۳۴۲
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🕯️</span>
+                            <div class="info-text">
+                                <strong>شهادت:</strong> ۱۲ دی ۱۳۶۱
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">👤</span>
+                            <div class="info-text">
+                                <strong>سن:</strong> ۱۹ سال
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📍</span>
+                            <div class="info-text">
+                                <strong>دلیل شهادت:</strong> اصابت گلوله در عملیات
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="memories-section">
+                        <h3 class="memories-title">📖 خاطرات شهید</h3>
+                        <ul class="memories-list">
+                            <li class="memory-item">محمدرضا به شعر و ادبیات علاقه زیادی داشت و همیشه دفترچه‌ای به همراه داشت که در آن اشعار خود را می‌نوشت.</li>
+                            <li class="memory-item">در آخرین شعری که نوشته بود، این بیت آمده بود: "من اگر بر خاک رهی خون گشتم / دریغ از دشمن کین‌اندوخته‌ام"</li>
+                            <li class="memory-item">برادرش تعریف می‌کند: محمدرضا قبل از اعزام، همه کتاب‌هایش را به کتابخانه مدرسه بخشید و گفت: "شاید دیگر نیایم که بخوانم."</li>
+                            <li class="memory-item">معلم کلاس چهارمش می‌گوید: محمدرضا همیشه در انشاهایش درباره وطن و دفاع از آن می‌نوشت.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- شهید 4 -->
+            <div class="martyr-card" data-category="other">
+                <div class="card-header">
+                    <span class="martyr-emoji">🧡</span>
+                    <h2 class="martyr-name">مهدی جعفری</h2>
+                </div>
+                <div class="card-body">
+                    <div class="martyr-info">
+                        <div class="info-item">
+                            <span class="info-icon">📅</span>
+                            <div class="info-text">
+                                <strong>تولد:</strong> ۲۰ شهریور ۱۳۶۵
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🕯️</span>
+                            <div class="info-text">
+                                <strong>شهادت:</strong> ۵ اسفند ۱۳۹۴
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">👤</span>
+                            <div class="info-text">
+                                <strong>سن:</strong> ۲۹ سال
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📍</span>
+                            <div class="info-text">
+                                <strong>دلیل شهادت:</strong> انفجار مین در حین عملیات
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="memories-section">
+                        <h3 class="memories-title">📖 خاطرات شهید</h3>
+                        <ul class="memories-list">
+                            <li class="memory-item">مهدی داوطلبانه برای دفاع از حرم حضرت زینب(س) به سوریه رفت و در نامه‌ای به خانواده نوشت: "اگر برای دفاع از حرم اهل بیت شهید شوم، به آرزوی دیرینم رسیده‌ام."</li>
+                            <li class="memory-item">هم‌رزمانش می‌گویند: مهدی همیشه قبل از نماز، برای خانواده‌های شهدای سوری دعا می‌کرد و به آنها کمک می‌رساند.</li>
+                            <li class="memory-item">پدرش تعریف می‌کند: مهدی از کودکی عاشق امام حسین(ع) بود و هر سال در مراسم محرم با شور خاصی شرکت می‌کرد.</li>
+                            <li class="memory-item">در آخرین تماس تلفنی‌اش گفته بود: "اینجا دشمنان می‌خواهند یادگار پیامبر را نابود کنند، ما نمی‌گذاریم."</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- شهید 5 -->
+            <div class="martyr-card" data-category="war">
+                <div class="card-header">
+                    <span class="martyr-emoji">💛</span>
+                    <h2 class="martyr-name">رضا محمودی</h2>
+                </div>
+                <div class="card-body">
+                    <div class="martyr-info">
+                        <div class="info-item">
+                            <span class="info-icon">📅</span>
+                            <div class="info-text">
+                                <strong>تولد:</strong> ۳۰ تیر ۱۳۴۸
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🕯️</span>
+                            <div class="info-text">
+                                <strong>شهادت:</strong> ۸ مهر ۱۳۶۶
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">👤</span>
+                            <div class="info-text">
+                                <strong>سن:</strong> ۱۸ سال
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📍</span>
+                            <div class="info-text">
+                                <strong>دلیل شهادت:</strong> انفجار مین در منطقه عملیاتی
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="memories-section">
+                        <h3 class="memories-title">📖 خاطرات شهید</h3>
+                        <ul class="memories-list">
+                            <li class="memory-item">رضا فوتبالیست ماهری بود و در تیم جوانان شهر بناب بازی می‌کرد. هم‌تیمی‌هایش می‌گویند: "همیشه می‌گفت باید مثل یک تیم، متحد و هم‌دل باشیم."</li>
+                            <li class="memory-item">خواهرش تعریف می‌کند: رضا عاشق کمک به دیگران بود و هر جمعه به پیرمردی تنها در همسایگی‌شان کمک می‌کرد تا خانه‌اش را تمیز کند.</li>
+                            <li class="memory-item">در آخرین نامه‌اش نوشته بود: "اگر من شهید شدم، ناراحت نباشید. من به جبهه رفتم تا شما در آرامش زندگی کنید."</li>
+                            <li class="memory-item">معلمش می‌گوید: رضا در درس ریاضی استعداد خاصی داشت و همیشه می‌گفت می‌خواهد مهندس شود.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- شهید 6 -->
+            <div class="martyr-card" data-category="security">
+                <div class="card-header">
+                    <span class="martyr-emoji">💜</span>
+                    <h2 class="martyr-name">سعید نظری</h2>
+                </div>
+                <div class="card-body">
+                    <div class="martyr-info">
+                        <div class="info-item">
+                            <span class="info-icon">📅</span>
+                            <div class="info-text">
+                                <strong>تولد:</strong> ۱۲ آذر ۱۳۶۰
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🕯️</span>
+                            <div class="info-text">
+                                <strong>شهادت:</strong> ۲۳ خرداد ۱۳۸۹
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">👤</span>
+                            <div class="info-text">
+                                <strong>سن:</strong> ۲۸ سال
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📍</span>
+                            <div class="info-text">
+                                <strong>دلیل شهادت:</strong> درگیری با قاچاقچیان مواد مخدر
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="memories-section">
+                        <h3 class="memories-title">📖 خاطرات شهید</h3>
+                        <ul class="memories-list">
+                            <li class="memory-item">سعید فارغ‌التحصیل دانشگاه در رشته حقوق بود و می‌خواست وکیل شود تا از مظلومان دفاع کند.</li>
+                            <li class="memory-item">دوستانش می‌گویند: سعید همیشه می‌گفت: "مبارزه با مواد مخدر، جهاد اکبر است چون جوانان کشور را نابود می‌کند."</li>
+                            <li class="memory-item">در عملیاتی که منجر به شهادتش شد، موفق شده بود یک شبکه بزرگ قاچاق را شناسایی و منهدم کند.</li>
+                            <li class="memory-item">پدرش تعریف می‌کند: سعید قبل از شهادتش گفته بود: "اگر در این راه کشته شدم، بدانید که برای نجات جوانان وطنم بود."</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Stats -->
+        <div class="stats-container">
+            <h2 class="stats-title">📊 آمار شهیدان شهر بناب</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalMartyrs">۶</div>
+                    <div class="stat-label">تعداد شهیدان</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="avgAge">۲۳.۸</div>
+                    <div class="stat-label">میانگین سن</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="youngest">۱۸</div>
+                    <div class="stat-label">جوان‌ترین شهید</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="oldest">۲۹</div>
+                    <div class="stat-label">مسن‌ترین شهید</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <span class="footer-logo">🕊️❤️</span>
+            <p>این یادواره به شهدای والامقام شهر بناب تقدیم شده است</p>
+            <p>«شهدا زنده‌اند و در نزد پروردگارشان روزی می‌خورند»</p>
+            <p>© 1404 - حنانه طالب بناب</p>
+        </footer>
+    </div>
+
+    <script>
+        // PWA Installation
+        let deferredPrompt;
+        const installPrompt = document.getElementById('installPrompt');
+        const installYes = document.getElementById('installYes');
+        const installNo = document.getElementById('installNo');
+        const addToHomeBtn = document.getElementById('addToHomeBtn');
+        
+        // Show install prompt after 2 seconds
+        setTimeout(() => {
+            if (!isAppInstalled() && !localStorage.getItem('installDismissed')) {
+                installPrompt.style.display = 'flex';
+            }
+        }, 2000);
+        
+        // Check if app is already installed
+        function isAppInstalled() {
+            return window.matchMedia('(display-mode: standalone)').matches || 
+                   window.navigator.standalone;
+        }
+        
+        // Before install prompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            addToHomeBtn.style.display = 'block';
+        });
+        
+        // Install button click
+        installYes.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                if (outcome === 'accepted') {
+                    alert('✅ برنامه با موفقیت نصب شد!');
+                    localStorage.setItem('appInstalled', 'true');
+                }
+            } else {
+                showInstallInstructions();
+            }
+            installPrompt.style.display = 'none';
+        });
+        
+        // Don't install button
+        installNo.addEventListener('click', () => {
+            installPrompt.style.display = 'none';
+            localStorage.setItem('installDismissed', 'true');
+        });
+        
+        // Add to home button
+        addToHomeBtn.addEventListener('click', () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+            } else {
+                showInstallInstructions();
+            }
+        });
+        
+        // Show installation instructions
+        function showInstallInstructions() {
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            let instructions = '';
+            
+            if (isMobile) {
+                const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+                
+                if (isIOS) {
+                    instructions = `
+                        📱 برای نصب روی iOS:
+                        1. روی دکمه Share (📤) کلیک کنید
+                        2. "Add to Home Screen" را انتخاب کنید
+                        3. "Add" را بزنید
+                    `;
+                } else {
+                    instructions = `
+                        📱 برای نصب روی Android:
+                        1. منوی مرورگر (سه نقطه) را باز کنید
+                        2. "Add to Home Screen" را انتخاب کنید
+                        3. "Add" را بزنید
+                    `;
+                }
+            } else {
+                instructions = `
+                    💻 برای نصب روی کامپیوتر:
+                    1. در Chrome: منو (سه نقطه) → More tools → Create shortcut
+                    2. در Edge: منو (سه نقطه) → Apps → Install this site as an app
+                    3. در Firefox: منو (سه خط) → More tools → Add to Home Screen
+                `;
+            }
+            
+            alert(instructions);
+        }
+        
+        // Search and Filter Functionality
+        const searchInput = document.getElementById('searchInput');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const martyrCards = document.querySelectorAll('.martyr-card');
+        
+        let currentFilter = 'all';
+        
+        // Set filter
+        function setFilter(filter) {
+            currentFilter = filter;
+            
+            // Update active button
+            filterButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.filter === filter) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            filterMartyrs();
+        }
+        
+        // Filter martyrs
+        function filterMartyrs() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            let visibleCount = 0;
+            
+            martyrCards.forEach((card, index) => {
+                const name = card.querySelector('.martyr-name').textContent.toLowerCase();
+                const category = card.dataset.category;
+                const details = card.querySelector('.card-body').textContent.toLowerCase();
+                
+                const matchesSearch = !searchTerm || 
+                    name.includes(searchTerm) || 
+                    details.includes(searchTerm);
+                
+                const matchesFilter = currentFilter === 'all' || category === currentFilter;
+                
+                if (matchesSearch && matchesFilter) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                    
+                    // Animation delay
+                    card.style.animationDelay = `${visibleCount * 0.1}s`;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            updateStats(visibleCount);
+            
+            // Show no results message
+            const container = document.getElementById('martyrsContainer');
+            let noResults = container.querySelector('.no-results');
+            
+            if (visibleCount === 0) {
+                if (!noResults) {
+                    noResults = document.createElement('div');
+                    noResults.className = 'no-results';
+                    noResults.style.cssText = `
+                        text-align: center;
+                        padding: 60px 20px;
+                        color: var(--primary);
+                        font-size: 1.5rem;
+                        grid-column: 1 / -1;
+                        background: rgba(255, 255, 255, 0.9);
+                        border-radius: var(--radius);
+                        border: 3px dashed var(--secondary);
+                    `;
+                    noResults.textContent = 'شهیدی با این مشخصات یافت نشد';
+                    container.appendChild(noResults);
+                }
+            } else if (noResults) {
+                noResults.remove();
+            }
+        }
+        
+        // Update stats
+        function updateStats(visibleCount) {
+            if (visibleCount === 0) {
+                document.getElementById('totalMartyrs').textContent = '۰';
+                document.getElementById('avgAge').textContent = '۰';
+                document.getElementById('youngest').textContent = '۰';
+                document.getElementById('oldest').textContent = '۰';
+                return;
+            }
+            
+            const visibleCards = document.querySelectorAll('.martyr-card[style*="block"]');
+            const ages = Array.from(visibleCards).map(card => {
+                const ageText = card.querySelector('.info-item:nth-child(3) .info-text').textContent;
+                return parseInt(ageText.match(/\d+/)[0]);
+            });
+            
+            const total = ages.length;
+            const avg = (ages.reduce((a, b) => a + b, 0) / total).toFixed(1);
+            const youngest = Math.min(...ages);
+            const oldest = Math.max(...ages);
+            
+            document.getElementById('totalMartyrs').textContent = total;
+            document.getElementById('avgAge').textContent = avg;
+            document.getElementById('youngest').textContent = youngest;
+            document.getElementById('oldest').textContent = oldest;
+        }
+        
+        // Event listeners for filters
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                setFilter(btn.dataset.filter);
+            });
+        });
+        
+        // Event listener for search
+        searchInput.addEventListener('input', () => {
+            filterMartyrs();
+        });
+        
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate cards on load
+            martyrCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+            
+            // Update stats initially
+            updateStats(6);
+        });
+        
+        // Service Worker Registration (for PWA)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // Register a simple service worker
+                const swContent = `
+                    self.addEventListener('install', (event) => {
+                        console.log('Service Worker نصب شد');
+                        self.skipWaiting();
+                    });
+                    
+                    self.addEventListener('activate', (event) => {
+                        console.log('Service Worker فعال شد');
+                    });
+                `;
+                
+                const blob = new Blob([swContent], { type: 'application/javascript' });
+                const swURL = URL.createObjectURL(blob);
+                
+                navigator.serviceWorker.register(swURL)
+                    .then(registration => {
+                        console.log('Service Worker ثبت شد:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('خطا در ثبت Service Worker:', error);
+                    });
+            });
+        }
+        
+        // Detect offline/online
+        window.addEventListener('online', () => {
+            console.log('آنلاین هستید');
+        });
+        
+        window.addEventListener('offline', () => {
+            console.log('آفلاین هستید');
+        });
+    </script>
+</body>
+</html>
